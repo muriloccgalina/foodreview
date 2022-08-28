@@ -1,10 +1,13 @@
 import express, { request } from "express";
+import verifyToken from "../config/auth.js";
 import User from "../models/User.js";
+
 
 const user = express.Router();
 
 user.get('/', (req, res) => {
-    res.send('Rota de Usuários');
+    const token = req.headers['token'];
+    const authData = verifyToken(token, res);
 });
 
 user.post('/register', async(req, res) => {
